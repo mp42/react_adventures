@@ -1,0 +1,57 @@
+<DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title> Hello React! </title>
+		<script src="build/react.js"></script>
+		<script src="build/react-dom.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+	</head>
+	<body> 
+		<div id="example"></div>
+		<script type="text/babel">
+			var UserFavColor = React.createClass({
+				render: function() {
+					// we can access props in child component using this.props
+					var colors = this.props.fav_colors.map(function(color) {
+						return ( <li> {color} </li>);
+					});
+					return (
+						<div> 
+							<h3> Favorite colors: </h3>
+							<ul> { colors} </ul>
+						</div>
+					);
+				}
+			});
+
+			var User = React.createClass({
+				getInitialState: function() {
+					return { username: 'Default User',
+							 fav_colors: ['Blue', 'Red', 'Yellow']
+							};
+				},
+
+				handleNameChange: function(e) {
+					this.setState({
+						username : e.target.value
+					});
+				},
+
+				render: function() {
+					return ( 
+						<div>
+							<h1> This is {this.state.username} and their favorite colors: </h1>
+							<br />
+							Change User: <input type="text" value={this.state.username} onChange={this.handleNameChange} />
+							<br />
+							// pass down state as prop to child component
+							<UserFavColor fav_colors={this.state.fav_colors} />
+						</div>
+					);
+				}
+			});
+			ReactDOM.render(<User />, document.getElementById('example'));
+		</script>
+	</body>
+</html>
