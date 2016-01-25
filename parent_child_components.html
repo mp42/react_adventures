@@ -25,11 +25,39 @@
 				}
 			});
 
+			var AddColor = React.createClass({
+				getInitialState: function() {
+					return { newColor: '' };
+				},
+
+				handleNewColor: function(e) {
+					this.setState({ newColor: e.target.value });
+				},
+				
+				addColor: function() {
+					this.props.addNewColor(this.state.newColor);
+					this.setState({ newColor: '' });
+				},
+
+				render: function() {
+					return (
+						<div>
+							Add Color: <input type="text" value={this.state.newColor} onChange={this.handleNewColor} />
+							<button onClick={this.addColor}> Add Color </button>
+						</div>
+					);
+				}
+			});
+
 			var User = React.createClass({
 				getInitialState: function() {
 					return { username: 'Default User',
 							 fav_colors: ['Blue', 'Red', 'Yellow']
 							};
+				},
+
+				addColorToList: function(color) {
+					this.setState({ fav_colors: this.state.fav_colors.concat([color]) });
 				},
 
 				handleNameChange: function(e) {
@@ -45,8 +73,8 @@
 							<br />
 							Change User: <input type="text" value={this.state.username} onChange={this.handleNameChange} />
 							<br />
-							// pass down state as prop to child component
 							<UserFavColor fav_colors={this.state.fav_colors} />
+							<AddColor addNewColor={this.addColorToList} />
 						</div>
 					);
 				}
