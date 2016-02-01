@@ -11,6 +11,9 @@
 		<div id="example"></div>
 		<script type="text/babel">
 			var UserFavColor = React.createClass({
+				getDefaultProps: function() {
+					return { fav_colors: [] };
+				},
 				render: function() {
 					// we can access props in child component using this.props
 					var colors = this.props.fav_colors.map(function(color) {
@@ -32,6 +35,10 @@
 
 				handleNewColor: function(e) {
 					this.setState({ newColor: e.target.value });
+				},
+
+				propTypes: {
+					addNewColor: React.PropTypes.func.isRequired
 				},
 				
 				addColor: function() {
